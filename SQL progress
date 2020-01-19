@@ -35,3 +35,21 @@ END
  where e1.Salary = (select MAX(Salary) from Employee group by DepartmentId
                       ) and D.DepartmentId = e1.Id
  order by D.DepartmentId
+
+#Big Contries
+select name, population, area
+from World
+where area > 3000000 or population >250000000;
+
+#Exchange Seats
+select 
+  case
+    when seat.id % 2 = 0 then seat.id -1
+    when seat.id % 2 <> 0 and seat.id = (select count(*) from seat) then seat.id
+    else
+        seat.id+1
+  end as id,
+  student
+ from seat
+ order by id;
+        
