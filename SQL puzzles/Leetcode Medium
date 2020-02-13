@@ -52,4 +52,3 @@ select
   student
  from seat
  order by id;
-
