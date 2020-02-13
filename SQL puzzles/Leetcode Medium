@@ -52,3 +52,24 @@ select
   student
  from seat
  order by id;
+
+#Managers with at Least 5 Direct Reports
+select Name
+from Employee as a1
+join 
+(select ManagerId
+ from Employee
+ groupby ManagerId
+ having count(ManagerId) >= 5
+ ) as a2
+ on a1.Id = a2.ManagerId
+ ;
+ 
+ #Friend Requests I: Overall Acceptance Rate
+ select ifnull(Round(count(distinct requester_id, accepter_id) / count(distinct sender_id, send_to_id),2),0) 
+ as accept_rate
+ from friend_request, request_accepted
+ ;
+ 
+ 
+ 
