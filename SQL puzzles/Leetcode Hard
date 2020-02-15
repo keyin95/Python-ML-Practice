@@ -8,7 +8,7 @@ case when d_avg < c_avg, then 'lower'
      else 'same'
 end as comparison
 from 
-(select date_format(pay_date,'%y-%m') as pay_month, department_id, avg(amount) as d_avg
+(select date_format(pay_date,'%Y-%m') as pay_month, department_id, avg(amount) as d_avg
  from salary, employee
  where salary.employee_id = employee.employee_id
  groupby pay_month, department_id
