@@ -24,7 +24,7 @@ on a2.pay_month = a1.pay_month
 
 #Users and Trips - Find the cancellation rate where the users_banned is no
 select Trips.Request_at as Day,
-(round((count(if(Trips.Status !=  'completed', Trips.Status, Null)/count(Trips.Status))),2))
+round((count(if(Trips.Status !=  'completed', Trips.Status, Null))/count(Trips.Status),2)
 as 'Cancellation Rate'
 from Trips
 inner join Users u1
