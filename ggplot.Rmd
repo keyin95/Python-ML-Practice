@@ -1,0 +1,139 @@
+---
+title: "Shihan Yin-ps2"
+author: "Shihan Yin"
+date: "2/5/2019"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#  Exercise2.R  short script for part of the Intro to GitHub example (Exercise2.R)
+##  BUS212a - Spring 2019, Prof. Kamis
+##  Modified by: [Shihan Yin]
+
+```{r}
+library(ggplot2)  # includes 'diamonds' dataframe. 
+library(RColorBrewer)
+
+str(diamonds)  
+
+#################
+# Partition the data, as shown in Chapter 2
+# use set.seed() to get the same partitions when re-running the R code.
+set.seed(42)
+
+############################ training 60%
+train.rows <- as.numeric(sample(rownames(diamonds), dim(diamonds)[1]*0.6))
+
+# collect all the columns with training row ID into training set:
+train.data <- diamonds[train.rows, ]
+
+# assign row IDs that are not in the training partition to be in the validation partition
+valid.rows <- as.numeric(setdiff(rownames(diamonds), train.rows))
+valid.data <- diamonds[valid.rows, ]
+
+## Now make plots based on the training and validation sets
+
+p1 <- ggplot(train.data, aes(carat, price, color =  color))+
+     geom_point(alpha = 0.10) +
+     geom_smooth(se=FALSE) +
+     scale_color_brewer(palette = "Set1") +
+     labs(title = "Price vs Carat, accounting for diamond color",
+          caption = "GGPLOT of Training Data")
+
+p1
+
+p2 <- ggplot(valid.data, aes(carat, price, color =  color)) +
+     geom_point(alpha = 0.10) +
+     geom_smooth(se=FALSE) +
+     scale_color_brewer(palette = "Set1") +
+     labs(title = "Price vs Carat, accounting for diamond color",
+          caption = "GGPLOT of Validation Data")
+p2
+############################ training 70%
+train.rows <- as.numeric(sample(rownames(diamonds), dim(diamonds)[1]*0.7))
+
+# collect all the columns with training row ID into training set:
+train.data <- diamonds[train.rows, ]
+
+# assign row IDs that are not in the training partition to be in the validation partition
+valid.rows <- as.numeric(setdiff(rownames(diamonds), train.rows))
+valid.data <- diamonds[valid.rows, ]
+
+## Now make plots based on the training and validation sets
+
+p1 <- ggplot(train.data, aes(carat, price, color =  color))+
+  geom_point(alpha = 0.10) +
+  geom_smooth(se=FALSE) +
+  scale_color_brewer(palette = "Set1") +
+  labs(title = "Price vs Carat, accounting for diamond color",
+       caption = "GGPLOT of Training Data")
+
+p1
+
+p2 <- ggplot(valid.data, aes(carat, price, color =  color)) +
+  geom_point(alpha = 0.10) +
+  geom_smooth(se=FALSE) +
+  scale_color_brewer(palette = "Set1") +
+  labs(title = "Price vs Carat, accounting for diamond color",
+       caption = "GGPLOT of Validation Data")
+p2
+```
+
+__From the training plot, in the 70% training set "G" color ends in a lower value than the 60% traning set. While "F" color and "I" color all end in a higher value.__
+
+__From the validation plot, in the 70% training set "D" color has a higher peak than the 60% traning set. And "I" color ends in a lower value.__
+
+__The increase in the percent of training data has raised the similarity in the results of training sets and validation sets.__
+
+_Now we can have a look at the relationship between price and carat, while different colors demonstrate different cuts in the display._
+```{r}
+####################step 3
+p1 <- ggplot(train.data, aes(carat, price, color =  cut))+
+  geom_point(alpha = 0.10) +
+  geom_smooth(se=FALSE) +
+  scale_color_brewer(palette = "Set1") +
+  labs(title = "Price vs Carat, accounting for diamond cut",
+       caption = "GGPLOT of Training Data")
+
+p1
+
+p2 <- ggplot(valid.data, aes(carat, price, color =  cut)) +
+  geom_point(alpha = 0.10) +
+  geom_smooth(se=FALSE) +
+  scale_color_brewer(palette = "Set1") +
+  labs(title = "Price vs Carat, accounting for diamond cut",
+       caption = "GGPLOT of Validation Data")
+p2
+```
+__From the training plot, the price is kind of fluctuating. Except "Fair" cut, all the cuts are sharing an overall positive trend and a later decline with the carats growing. While "Fair" cut always has a higher price with more carats.__
+
+__From the validation plot, overall, except "Fair" cut, the price of diamond is increasing with more carats within 2.5 carats. More than 2.5 carats, there is a slight decline in the price with the growing carats. While "Fair" cut always has a posive relationship with the growing carats. In terms of cuts, within about 2.5 carats, the better the quality of cuts is, the higher the price is.__
+
+_Now we can have a look at the relationship between price and carat, while different colors demonstrate different clarities in the display._
+```{r}
+################step 4
+p1 <- ggplot(train.data, aes(carat, price, color =  clarity))+
+  geom_point(alpha = 0.10) +
+  geom_smooth(se=FALSE) +
+  scale_color_brewer(palette = "Set1") +
+  labs(title = "Price vs Carat, accounting for diamond clarity",
+       caption = "GGPLOT of Training Data")
+
+p1
+
+p2 <- ggplot(valid.data, aes(carat, price, color =  clarity)) +
+  geom_point(alpha = 0.10) +
+  geom_smooth(se=FALSE) +
+  scale_color_brewer(palette = "Set1") +
+  labs(title = "Price vs Carat, accounting for diamond clarity",
+       caption = "GGPLOT of Validation Data")
+p2
+```
+__From the training plot, we could tell that approximately at the same carats, the more the clarity is, the higher the price is. What should also be noticed is that "l1" level apparently has a price gap between other levels, which is larger at the higher carats.__
+
+__From the validation plot, the price is approximately rising with higher carats among all the clarities. While "l1" level is still having a price gap between other levels.__
+
+__From above, we can see that more perfect cuts and higher clarities can cause higher prices within some range of carats. And higher carats usually mean higher prices.__
