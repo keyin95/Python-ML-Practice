@@ -21,3 +21,18 @@ group by pay_month
 ) as a1
 on a2.pay_month = a1.pay_month
 ;
+
+#Users and Trips - Find the cancellation rate where the users_banned is no
+select Trips.Request_at as Day,
+(round((count(if(Trips.Status !=  'completed', Trips.Status, Null)/count(Trips.Status))),2))
+as 'Cancellation Rate'
+from Trips
+inner join Users u1
+on Trips.Users_Id = u1.Client_Id 
+inner join Users u2
+on Trips.Users_Id = u2.Client_Id 
+where
+      u1.Banned = 'No' and
+      u2.Banned = 'No' and
+      Trips.Request_at  between '2013-10-01' and '2013-10-03'
+group by Trips.Request_at;
