@@ -1,5 +1,5 @@
-# Stacy-DZ
-Progress to a data scientist
+# Coding Practice
+Progress to be a data scientist
 - SQL practice
 - python practice
 - data visualization
